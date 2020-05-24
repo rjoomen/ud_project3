@@ -11,7 +11,8 @@ void drive_robot(float lin_x, float ang_z)
 {
     // Request a service and pass the velocities to it to drive the robot
 
-    ROS_INFO_STREAM("Moving the robot");
+    if (lin_x!=0.0 || ang_z != 0.0)
+        ROS_INFO_STREAM("Moving the robot");
 
     ball_chaser::DriveToTarget srv;
     srv.request.linear_x = lin_x;
@@ -34,22 +35,27 @@ void process_image_callback(const sensor_msgs::Image img)
     // Depending on the white ball position, call the drive_bot function and pass velocities to it
     // Request a stop when there's no white ball seen by the camera
 
-    for (int i = 0; i < img.step*img.height; i++)
+    int numch = sensor_msgs::image_encodings::numChannels(img.encoding);
+
+    if (numch != 3)
+        throw std::range_error("Three-channel image expected");
+
+    for (int i = 0; i < img.step*img.height; i = i + numch)
     {
         int row = i / img.step;
-        int col = (i % img.step) / sensor_msgs::image_encodings::numChannels(img.encoding);
-        if (img.data[i] == white_pixel)
+        int col = (i % img.step) / numch;
+        if ((img.data[i] == white_pixel) && (img.data[i+1] == white_pixel) && (img.data[i+2] == white_pixel))
         {
             if (col < .4*img.width)
-                drive_robot(0, 0.1); // right
+                drive_robot(0.0, 0.5); // left
             else if (col > .6*img.width)
-                drive_robot(0, -0.1); // left
+                drive_robot(0.0, -0.5); // right
             else
-                drive_robot(0.5, 0); // straight
+                drive_robot(0.5, 0.0); // straight
             return;
         }
     }
-    drive_robot(0, 0);
+    drive_robot(0.0, 0.0); // stop
 }
 
 int main(int argc, char** argv)
