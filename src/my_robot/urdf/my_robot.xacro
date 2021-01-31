@@ -1,7 +1,7 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
     <xacro:include filename="$(find my_robot)/urdf/my_robot.gazebo" />
-    
+
     <link name="robot_footprint"></link>
 
     <joint name="robot_footprint_joint" type="fixed">
@@ -46,6 +46,24 @@
             <geometry>
                 <cylinder radius="0.1" length="0.049" />
             </geometry>
+            <surface>
+                <!-- Copied from Pioneer 3AT -->
+                <contact>
+                    <ode>
+                        <kp>1e+06</kp>
+                        <kd>100</kd>
+                        <max_vel>1</max_vel>
+                        <min_depth>0</min_depth>
+                    </ode>
+                </contact>
+                <friction>
+                    <ode>
+                        <mu>1</mu>
+                        <mu2>1</mu2>
+                        <fdir1>0 1 0</fdir1>
+                    </ode>
+                </friction>
+            </surface>
         </collision>
 
         <visual name="front_left_wheel_visual">
@@ -68,6 +86,24 @@
             <geometry>
                 <cylinder radius="0.1" length="0.049" />
             </geometry>
+            <surface>
+                <!-- Copied from Pioneer 3AT -->
+                <contact>
+                    <ode>
+                        <kp>1e+06</kp>
+                        <kd>100</kd>
+                        <max_vel>1</max_vel>
+                        <min_depth>0</min_depth>
+                    </ode>
+                </contact>
+                <friction>
+                    <ode>
+                        <mu>1</mu>
+                        <mu2>1</mu2>
+                        <fdir1>0 1 0</fdir1>
+                    </ode>
+                </friction>
+            </surface>
         </collision>
 
         <visual name="back_left_wheel_visual">
@@ -90,6 +126,24 @@
             <geometry>
                 <cylinder radius="0.1" length="0.049" />
             </geometry>
+            <surface>
+                <!-- Copied from Pioneer 3AT -->
+                <contact>
+                    <ode>
+                        <kp>1e+06</kp>
+                        <kd>100</kd>
+                        <max_vel>1</max_vel>
+                        <min_depth>0</min_depth>
+                    </ode>
+                </contact>
+                <friction>
+                    <ode>
+                        <mu>1</mu>
+                        <mu2>1</mu2>
+                        <fdir1>0 1 0</fdir1>
+                    </ode>
+                </friction>
+            </surface>
         </collision>
 
         <visual name="front_right_wheel_visual">
@@ -112,6 +166,24 @@
             <geometry>
                 <cylinder radius="0.1" length="0.049" />
             </geometry>
+            <surface>
+                <!-- Copied from Pioneer 3AT -->
+                <contact>
+                    <ode>
+                        <kp>1e+06</kp>
+                        <kd>100</kd>
+                        <max_vel>1</max_vel>
+                        <min_depth>0</min_depth>
+                    </ode>
+                </contact>
+                <friction>
+                    <ode>
+                        <mu>1</mu>
+                        <mu2>1</mu2>
+                        <fdir1>0 1 0</fdir1>
+                    </ode>
+                </friction>
+            </surface>
         </collision>
 
         <visual name="back_right_wheel_visual">
@@ -239,5 +311,5 @@
     <gazebo reference="hokuyo">
         <material>Gazebo/LightBlueLaser</material>
     </gazebo>
-    
+
 </robot>
